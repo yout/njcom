@@ -27,6 +27,7 @@ echo "[=== end compile css. ===]"
 echo "[=== compile complete! ===]"
 
 echo "[=== commit js/css! ===]"
+pwd
 svn commit -m "compress js or css. auto commit. $(date '+%Y-%m-%d %H:%M:%S')"
 echo "[=== commit js/css successfully! ===]"
 
