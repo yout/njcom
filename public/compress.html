@@ -1,0 +1,89 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>物流静态资源统一压缩工具</title>
+<script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+<link href="/css/bootstrap.css" rel="stylesheet">
+<style type="text/css">
+div {
+	margin: 30 auto;
+	text-align: center;
+}
+
+.input {
+	height: 30px;
+	line-height: 30px;
+}
+
+.red {
+	color: red;
+}
+
+.green {
+	color: green;
+}
+</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="page-header">
+			<h1>物流静态资源统一压缩工具</h1>
+		</div>
+		<div>
+			<div>
+				<span class="strong">输入当前静态分支：</span> <span> <input
+					type="text" value="" id="svnPath" size="100" class="span10"
+					style="height: 30px; line-height: 30px;" /> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>exp:http://svn.alibaba-inc.com/repos/ali_itu/bss/alp_static/branches/20121015_yout_test_nodejs</code>
+				</span>
+			</div>
+			<div>
+				<div id="msg"></div>
+				<button class="btn  btn-success" id="compress_btn">压缩</button>
+				<img id="loading_pic" alt="loading 图片" src="/image/loading.gif" />
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	$(function() {
+		$('#loading_pic').hide();
+		$('#compress_btn')
+				.click(
+						function() {
+							if ($('#svnPath').val() == "") {
+								alert('不填svn路径我怎么压啊，哥！');
+								$('#svnPath').focus();
+								return false;
+							}
+							var pathRegex = /^(http:\/\/svn.alibaba-inc.com\/repos\/ali_itu\/bss\/alp_static\/branches\/).+$/;
+							if (!pathRegex.exec($('#svnPath').val())) {
+								alert('哥，你Y的svn url好像不对啊，问问元芳！');
+								return false;
+							}
+							$('#compress_btn').text('压缩中...').attr('disabled',
+									true);
+							$('#loading_pic').show();
+							$.ajax({
+								url : 'compress.compress?path='
+										+ $('#svnPath').val(),
+								error : function() {
+									$('#loading_pic').hide();
+									$('#compress_btn')
+											.text('压缩失败！稍候重试或者联系管理员!').attr(
+													'title', '重新压缩请刷新页面');
+								},
+								success : function() {
+									$('#loading_pic').hide();
+									$('#compress_btn').text('压缩成功！').attr(
+											'title', '重新压缩请刷新页面');
+								}
+							});
+							return false;
+						});
+
+	});
+</script>
+
+</html>
