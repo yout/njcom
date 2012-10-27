@@ -7,9 +7,9 @@ function compress(request, response) {
 	var query = url.parse(request.url).query;
 	var path = querystring.parse(query)["path"];
 	console.log('path:' + path);
-	comp = exec(config.conf.cmd);
+	comp = exec(config.conf.cmd + ' ' + path);
 	comp.stdout.on('data', function(data) {
-		// TODO: 日志写文件
+		console.log(data);
 	});
 	comp.on('exit', function(code, signal) {
 		console.log('compress complete !');
