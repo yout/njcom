@@ -3,6 +3,6 @@
  */
 exports.conf = {
 	port : 1987,
-	cmd : 'dir',
+	cmd : 'sh compress-jscss.sh',
 	publicPath : './public'
 };
